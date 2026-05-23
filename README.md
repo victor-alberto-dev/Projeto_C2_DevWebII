@@ -1,4 +1,4 @@
-﻿# Biblioteca Digital — API REST
+﻿# Biblioteca Digital - API REST
 
 API REST completa para um sistema de biblioteca digital, desenvolvida como projeto da C2 da disciplina de Desenvolvimento Web II.
 
@@ -139,5 +139,5 @@ O print do relatório de cobertura está disponível em [`docs/`](docs/).
 
 ```bash
 npx prisma studio
-# Acesse http://localhost:5555, edite o campo 'role' do usuário para 'ADMIN'
+# Acesse http://localhost:51212, edite o campo 'role' do usuário para 'ADMIN'
 ```
