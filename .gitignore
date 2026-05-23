@@ -1,0 +1,26 @@
+﻿# Dependências
+node_modules/
+
+# Arquivos de ambiente (NUNCA commitar .env real)
+.env
+.env.local
+
+# Build
+dist/
+
+# Banco de dados
+prisma/dev.db
+prisma/dev.db-journal
+prisma/test.db
+prisma/test.db-journal
+
+# Cobertura de testes
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db

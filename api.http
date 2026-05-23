@@ -1,0 +1,148 @@
+﻿### Variáveis
+@baseUrl = http://localhost:3000
+@token = COLE_SEU_TOKEN_AQUI
+
+### ============ AUTH ============
+
+### Registrar usuário
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "email": "joao@email.com",
+  "password": "senha123"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "joao@email.com",
+  "password": "senha123"
+}
+
+### Dados do usuário autenticado
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### ============ AUTHORS ============
+
+### Listar autores (público)
+GET {{baseUrl}}/authors
+
+### Buscar autor por ID
+GET {{baseUrl}}/authors/ID_DO_AUTOR
+
+### Criar autor (ADMIN)
+POST {{baseUrl}}/authors
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Machado de Assis",
+  "bio": "Maior escritor da literatura brasileira"
+}
+
+### Atualizar autor (ADMIN)
+PUT {{baseUrl}}/authors/ID_DO_AUTOR
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "bio": "Escritor e poeta brasileiro do séc. XIX"
+}
+
+### Deletar autor (ADMIN)
+DELETE {{baseUrl}}/authors/ID_DO_AUTOR
+Authorization: Bearer {{token}}
+
+### ============ BOOKS ============
+
+### Listar livros (público)
+GET {{baseUrl}}/books
+
+### Buscar livro por ID (inclui autor, empréstimos e reservas)
+GET {{baseUrl}}/books/ID_DO_LIVRO
+
+### Criar livro (ADMIN)
+POST {{baseUrl}}/books
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Dom Casmurro",
+  "isbn": "978-85-359-0277-5",
+  "year": 1899,
+  "synopsis": "Clássico da literatura brasileira",
+  "authorId": "ID_DO_AUTOR"
+}
+
+### Atualizar livro (ADMIN)
+PUT {{baseUrl}}/books/ID_DO_LIVRO
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "synopsis": "Nova sinopse"
+}
+
+### Deletar livro (ADMIN)
+DELETE {{baseUrl}}/books/ID_DO_LIVRO
+Authorization: Bearer {{token}}
+
+### ============ LOANS ============
+
+### Listar empréstimos
+GET {{baseUrl}}/loans
+Authorization: Bearer {{token}}
+
+### Buscar empréstimo por ID
+GET {{baseUrl}}/loans/ID_DO_EMPRESTIMO
+Authorization: Bearer {{token}}
+
+### Criar empréstimo
+POST {{baseUrl}}/loans
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "bookId": "ID_DO_LIVRO",
+  "dueDate": "2026-06-30T00:00:00.000Z"
+}
+
+### Devolver livro (dono ou ADMIN)
+PATCH {{baseUrl}}/loans/ID_DO_EMPRESTIMO/return
+Authorization: Bearer {{token}}
+
+### Deletar empréstimo (ADMIN)
+DELETE {{baseUrl}}/loans/ID_DO_EMPRESTIMO
+Authorization: Bearer {{token}}
+
+### ============ RESERVATIONS ============
+
+### Listar reservas
+GET {{baseUrl}}/reservations
+Authorization: Bearer {{token}}
+
+### Buscar reserva por ID
+GET {{baseUrl}}/reservations/ID_DA_RESERVA
+Authorization: Bearer {{token}}
+
+### Criar reserva
+POST {{baseUrl}}/reservations
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "bookId": "ID_DO_LIVRO"
+}
+
+### Confirmar reserva (ADMIN)
+PATCH {{baseUrl}}/reservations/ID_DA_RESERVA/confirm
+Authorization: Bearer {{token}}
+
+### Cancelar reserva (dono ou ADMIN)
+DELETE {{baseUrl}}/reservations/ID_DA_RESERVA
+Authorization: Bearer {{token}}
