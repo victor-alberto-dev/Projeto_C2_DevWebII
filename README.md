@@ -129,6 +129,12 @@ npm run test:coverage
 npm run test:watch
 ```
 
+## Cobertura de testes
+
+O projeto atinge **≥ 70%** de cobertura de linhas e funções (threshold configurado no `vitest.config.ts`).
+
+O print do relatório de cobertura está disponível em [`docs/`](docs/).
+
 ## Tornar usuário ADMIN (via Prisma Studio)
 
 ```bash

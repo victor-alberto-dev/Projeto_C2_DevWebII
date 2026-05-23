@@ -21,7 +21,7 @@ loansRouter.get('/', authenticate, async (req: Request, res: Response) => {
 
 loansRouter.get('/:id', authenticate, async (req: Request, res: Response) => {
   const loan = await prisma.loan.findUnique({
-    where: { id: req.params['id'] },
+    where: { id: req.params['id'] as string },
     include: {
       book: { select: { id: true, title: true, isbn: true, author: { select: { name: true } } } },
       user: { select: { id: true, name: true, email: true } },
@@ -68,7 +68,7 @@ loansRouter.post('/', authenticate, async (req: Request, res: Response) => {
 })
 
 loansRouter.patch('/:id/return', authenticate, async (req: Request, res: Response) => {
-  const loan = await prisma.loan.findUnique({ where: { id: req.params['id'] } })
+  const loan = await prisma.loan.findUnique({ where: { id: req.params['id'] as string } })
   if (!loan) {
     res.status(404).json({ error: 'Empréstimo não encontrado' })
     return
@@ -84,7 +84,7 @@ loansRouter.patch('/:id/return', authenticate, async (req: Request, res: Respons
 
   const [updated] = await prisma.$transaction([
     prisma.loan.update({
-      where: { id: req.params['id'] },
+      where: { id: req.params['id'] as string },
       data: { returnedAt: new Date() },
       include: { book: { select: { id: true, title: true } } },
     }),
@@ -95,11 +95,11 @@ loansRouter.patch('/:id/return', authenticate, async (req: Request, res: Respons
 })
 
 loansRouter.delete('/:id', authenticate, authorize('ADMIN'), async (req: Request, res: Response) => {
-  const exists = await prisma.loan.findUnique({ where: { id: req.params['id'] } })
+  const exists = await prisma.loan.findUnique({ where: { id: req.params['id'] as string } })
   if (!exists) {
     res.status(404).json({ error: 'Empréstimo não encontrado' })
     return
   }
-  await prisma.loan.delete({ where: { id: req.params['id'] } })
+  await prisma.loan.delete({ where: { id: req.params['id'] as string } })
   res.status(204).send()
 })

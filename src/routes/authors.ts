@@ -16,7 +16,7 @@ authorsRouter.get('/', async (_req: Request, res: Response) => {
 
 authorsRouter.get('/:id', async (req: Request, res: Response) => {
   const author = await prisma.author.findUnique({
-    where: { id: req.params['id'] },
+    where: { id: req.params['id'] as string },
     include: { books: { select: { id: true, title: true, year: true, available: true } } },
   })
   if (!author) {
@@ -42,21 +42,21 @@ authorsRouter.put('/:id', authenticate, authorize('ADMIN'), async (req: Request,
     res.status(422).json({ error: 'Dados inválidos', details: result.error.issues })
     return
   }
-  const exists = await prisma.author.findUnique({ where: { id: req.params['id'] } })
+  const exists = await prisma.author.findUnique({ where: { id: req.params['id'] as string } })
   if (!exists) {
     res.status(404).json({ error: 'Autor não encontrado' })
     return
   }
-  const author = await prisma.author.update({ where: { id: req.params['id'] }, data: result.data })
+  const author = await prisma.author.update({ where: { id: req.params['id'] as string }, data: result.data })
   res.json(author)
 })
 
 authorsRouter.delete('/:id', authenticate, authorize('ADMIN'), async (req: Request, res: Response) => {
-  const exists = await prisma.author.findUnique({ where: { id: req.params['id'] } })
+  const exists = await prisma.author.findUnique({ where: { id: req.params['id'] as string } })
   if (!exists) {
     res.status(404).json({ error: 'Autor não encontrado' })
     return
   }
-  await prisma.author.delete({ where: { id: req.params['id'] } })
+  await prisma.author.delete({ where: { id: req.params['id'] as string } })
   res.status(204).send()
 })

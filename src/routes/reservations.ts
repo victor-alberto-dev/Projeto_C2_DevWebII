@@ -21,7 +21,7 @@ reservationsRouter.get('/', authenticate, async (req: Request, res: Response) =>
 
 reservationsRouter.get('/:id', authenticate, async (req: Request, res: Response) => {
   const reservation = await prisma.reservation.findUnique({
-    where: { id: req.params['id'] },
+    where: { id: req.params['id'] as string },
     include: {
       book: { select: { id: true, title: true, isbn: true, author: { select: { name: true } } } },
       user: { select: { id: true, name: true, email: true } },
@@ -68,7 +68,7 @@ reservationsRouter.post('/', authenticate, async (req: Request, res: Response) =
 })
 
 reservationsRouter.patch('/:id/confirm', authenticate, authorize('ADMIN'), async (req: Request, res: Response) => {
-  const reservation = await prisma.reservation.findUnique({ where: { id: req.params['id'] } })
+  const reservation = await prisma.reservation.findUnique({ where: { id: req.params['id'] as string } })
   if (!reservation) {
     res.status(404).json({ error: 'Reserva não encontrada' })
     return
@@ -78,7 +78,7 @@ reservationsRouter.patch('/:id/confirm', authenticate, authorize('ADMIN'), async
     return
   }
   const updated = await prisma.reservation.update({
-    where: { id: req.params['id'] },
+    where: { id: req.params['id'] as string },
     data: { status: 'CONFIRMED' },
     include: { book: { select: { id: true, title: true } } },
   })
@@ -86,7 +86,7 @@ reservationsRouter.patch('/:id/confirm', authenticate, authorize('ADMIN'), async
 })
 
 reservationsRouter.delete('/:id', authenticate, async (req: Request, res: Response) => {
-  const reservation = await prisma.reservation.findUnique({ where: { id: req.params['id'] } })
+  const reservation = await prisma.reservation.findUnique({ where: { id: req.params['id'] as string } })
   if (!reservation) {
     res.status(404).json({ error: 'Reserva não encontrada' })
     return
@@ -96,7 +96,7 @@ reservationsRouter.delete('/:id', authenticate, async (req: Request, res: Respon
     return
   }
   await prisma.reservation.update({
-    where: { id: req.params['id'] },
+    where: { id: req.params['id'] as string },
     data: { status: 'CANCELLED' },
   })
   res.status(204).send()
