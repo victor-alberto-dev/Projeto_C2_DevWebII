@@ -1,6 +1,6 @@
 ﻿# Biblioteca Digital — API REST
 
-API REST completa para um sistema de biblioteca digital, desenvolvida como projeto da Composição 2 da disciplina de Desenvolvimento Web II.
+API REST completa para um sistema de biblioteca digital, desenvolvida como projeto da C2 da disciplina de Desenvolvimento Web II.
 
 ## Domínio
 
